@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [bets, setBets] = useState([]);
+
+  async function getBets() {
+    const response = await fetch(
+      "http://ebtutorial-env.mcgkxmuc2r.eu-west-2.elasticbeanstalk.com/api/v1/bets"
+    );
+    const json = await response.json();
+    setBets(json.bets);
+  }
+
+  getBets();
+
+  return <div className="App">{JSON.stringify(bets)}</div>;
 }
 
 export default App;
